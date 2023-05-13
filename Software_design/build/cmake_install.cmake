@@ -1,4 +1,4 @@
-# Install script for directory: /home/ubuntu/esp/hello_world
+# Install script for directory: /home/ubuntu/Desktop/project/Desktop_Small_Screen_Project/Software_design
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/ubuntu/esp/hello_world/build/esp-idf/cmake_install.cmake")
+  include("/home/ubuntu/Desktop/project/Desktop_Small_Screen_Project/Software_design/build/esp-idf/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ubuntu/esp/hello_world/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ubuntu/Desktop/project/Desktop_Small_Screen_Project/Software_design/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

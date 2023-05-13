@@ -1,4 +1,4 @@
-# Install script for directory: /home/ubuntu/esp/hello_world/main
+# Install script for directory: /home/ubuntu/Desktop/project/Desktop_Small_Screen_Project/Software_design/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
