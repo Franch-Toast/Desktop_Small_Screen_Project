@@ -19,7 +19,7 @@ void app_main(void)
 
     /* Print chip information */
     esp_chip_info_t chip_info;
-    esp_chip_info(&chip_info);
+    esp_chip_info(&chip_info); //获取芯片的信息，然后再下面打印
     printf("This is %s chip with %d CPU core(s), WiFi%s%s, ",
             CONFIG_IDF_TARGET,
             chip_info.cores,
@@ -36,8 +36,9 @@ void app_main(void)
     for (int i = 10; i >= 0; i--) {
         printf("Restarting in %d seconds...\n", i);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
+        //这里其实要在task.h中进行宏定义,延迟 1000/1000=1 us，可以参看examples示例中的build_system样例，其中定义了
     }
     printf("Restarting now.\n");
-    fflush(stdout);
-    esp_restart();
+    fflush(stdout);//清除缓冲区
+    esp_restart();//重新启动
 }
