@@ -13,13 +13,17 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 
+#include "esp_log.h"//加入comonents中的关于日志的头文件
+
+static const char *TAG = "MAIN APP";//定义文件在日志中的标识
+
 void app_main(void)
 {
     printf("Hello world!\n");
 
     /* Print chip information */
     esp_chip_info_t chip_info;
-    esp_chip_info(&chip_info);
+    esp_chip_info(&chip_info);//获取芯片的信息，并在下面打印
     printf("This is %s chip with %d CPU core(s), WiFi%s%s, ",
             CONFIG_IDF_TARGET,
             chip_info.cores,
@@ -36,7 +40,11 @@ void app_main(void)
     for (int i = 10; i >= 0; i--) {
         printf("Restarting in %d seconds...\n", i);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
+        // 延迟 1000/1000=1 us，这里在task.h中实际应该有一个宏定义#define portTICK_PERIOD_MS 1000，但是本项目中没有
     }
+
+    ESP_LOGI(TAG, "system init V1.1");//写入输出日志信息
+
     printf("Restarting now.\n");
     fflush(stdout);
     esp_restart();

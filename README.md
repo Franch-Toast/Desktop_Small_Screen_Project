@@ -2,7 +2,7 @@
 
 ## 需求分析
 
-![项目整体架构需求框架](Picture_source\产品需求文档V1.png)
+![项目整体架构需求框架](https://raw.githubusercontent.com/Franch-Toast/Desktop_Small_Screen_Project/hello_world/Picture_source/%E4%BA%A7%E5%93%81%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3v1.png)
 
 
 
@@ -36,13 +36,35 @@
 
 ### 软件流程逻辑图
 
-![桌面屏幕流程逻辑V1.0](Picture_source\桌面屏幕流程逻辑V1.0.jpg)
+![桌面屏幕流程逻辑V1.0](https://raw.githubusercontent.com/Franch-Toast/Desktop_Small_Screen_Project/hello_world/Picture_source/%E6%A1%8C%E9%9D%A2%E5%B1%8F%E5%B9%95%E6%B5%81%E7%A8%8B%E9%80%BB%E8%BE%91V1.0.jpg)
 
 ### 开发环境
 
 在windows平台上使用VScode IDE通过ssh远程链接Ubuntu虚拟机进行开发。
 
 关于ESP32-IDF物联网开发框架的安装可以参考[乐鑫官网的ESP-IDF编程指南](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/get-started/index.html)。
+
+
+
+### hello_world分支
+
+从官方`examples`中导出的`hello_world`工程，工程中进行了对芯片信息的打印，并在进行倒数10s后重新启动。
+
+其中`portTICK_PERIOD_MS`在`task.h`中没有进行宏定义，实际应该有宏定义`#define portTICK_PERIOD_MS 1000`。
+
+
+
+### Log分支
+
+学习在程序的运行过程中打印日志文件。
+
+参考了ESP32-IDF开发指南中的[System_API--Logging](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/log.html)章节，在此前文件的基础上添加了官方logging部件中的头文件和宏定义`static const char *TAG = "MAIN APP";`标识日志信息，并在`app_main`中输出。
+
+
+
+
+
+
 
 
 
@@ -59,5 +81,11 @@
 
 ### 2023.5.13
 
-1. 修改README文件中图片不显示问题；
-2. 添加第一个分支`hello_world`作为初始学习ESP32的初始工程并完成编译，工程内容来自乐鑫提供的官方示例文档；
+1. 修改README文件中图片不显示问题；（未成功解决）
+2. 添加第一个分支`hello_world`作为初始学习ESP32的初始工程，工程内容来自乐鑫提供的官方示例文档；
+
+### 2023.5.14
+
+1. 学习为`hello_world`工程添加日志打印功能，该功能参考ESP32-IDF开发指南中的[System_API--Logging](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/log.html)章节。
+2. 再次修改`README`文件中图片不显示问题；
+3. 添加了`component`部件文件夹，提供文件支持；
