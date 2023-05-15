@@ -44,6 +44,7 @@
 
 关于ESP32-IDF物联网开发框架的安装可以参考[乐鑫官网的ESP-IDF编程指南](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/get-started/index.html)。
 
+关于项目的构筑参考[构建系统（CMake 版）](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-guides/build-system.html?highlight=cmake)，其中包含了整个项目的结构以及CMakeLists的编写方法。
 
 
 ### hello_world分支
@@ -62,8 +63,11 @@
 
 
 
+### FreeRTOS分支
 
+学习在程序中添加多任务运行。
 
+使用官方的FreeRTOS组件，简单地创建了一个任务，在任务中实现每秒打印日志。具体的API参考ESP32-IDF开发指南中的[System_API--FreeRTOS](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/freertos.html)。
 
 
 
@@ -86,6 +90,11 @@
 
 ### 2023.5.14
 
-1. 学习为`hello_world`工程添加日志打印功能，该功能参考ESP32-IDF开发指南中的[System_API--Logging](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/log.html)章节。
+1. 学习为`hello_world`工程添加日志打印功能，该功能参考ESP32-IDF开发指南中的[System_API--Logging](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/log.html)章节；
 2. 再次修改`README`文件中图片不显示问题；
 3. 添加了`component`部件文件夹，提供文件支持；
+
+### 2023.5.15
+
+1. 在Log分支的基础上尝试使用官方`FreeRTOS`组件实现实时操作系统，添加了一个任务，任务中每一秒打印一条日志，具体的API参考ESP32-IDF开发指南中的[System_API--FreeRTOS](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/freertos.html)。
+2. 添加了构筑系统的解释文档，简单地学习了CMakeLists的用法。
