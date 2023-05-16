@@ -70,6 +70,21 @@
 使用官方的FreeRTOS组件，简单地创建了一个任务，在任务中实现每秒打印日志。具体的API参考ESP32-IDF开发指南中的[System_API--FreeRTOS](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/freertos.html)。
 
 
+### Timer分支
+
+根据[Peripherals--Timer](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.1/api-reference/peripherals/timer.html)以及[System_API--FreeRTOS](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/freertos.html)（消息队列相关内容在其中）添加定时器功能，并且创建消息队列，防止在中断中执行较复杂的任务形成终端堵塞。
+
+这里的创建的任务也只是使用了基本的功能进行测试，没有实际的逻辑意义，如存入消息队列和取出队列中的消息是没有意义的，这里仅仅做了这个操作动作用来熟悉而已。
+
+定时器的初始化工作：
+1. 进行定时器的参数配置；
+2. 中断函数的注册和定义；
+3. 定时器的使能；
+
+还定义了简单的消息队列，消息队列的发送在中断服务函数中进行，其取出并进行对应的后续操作在任务中实现。
+
+
+
 
 
 ## 更新日志
@@ -98,3 +113,9 @@
 
 1. 在Log分支的基础上尝试使用官方`FreeRTOS`组件实现实时操作系统，添加了一个任务，任务中每一秒打印一条日志，具体的API参考ESP32-IDF开发指南中的[System_API--FreeRTOS](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/system/freertos.html)。
 2. 添加了构筑系统的解释文档，简单地学习了CMakeLists的用法。
+
+### 2023.5.16
+
+1. 重新将此前的`hello_world.c`更改为`app_main.c`，并添加了定时器初始化函数；
+2. 编写了`ds_timer.c`和对应的头文件`ds_timer.h`,在其中定义了一个测试用的新任务，测试了定时器功能和消息队列功能；
+3. 更新了项目主组件中的`CMakeLists`文件。
