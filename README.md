@@ -84,6 +84,11 @@
 还定义了简单的消息队列，消息队列的发送在中断服务函数中进行，其取出并进行对应的后续操作在任务中实现。
 
 
+### File_system分支
+
+根据[Storage--SPIFFS](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/storage/spiffs.html)来编写文件系统，关于spiffs在ESP32的应用可以参考[知乎的一篇文章](https://zhuanlan.zhihu.com/p/115869248)。
+
+该分支实现的功能：为原始分区表添加了`storage`分区，将 SPIFFS 注册并挂载到 VFS，调用`esp_err_t ds_spiffs_init(void);`进行相应的初始化，随后调用`void ds_spiffs_test(void);`测试使用C标准库的文件操作函数进行相应的一系列操作，最后调用`void ds_spiffs_deinit(void);`函数注销。
 
 
 
@@ -118,4 +123,10 @@
 
 1. 重新将此前的`hello_world.c`更改为`app_main.c`，并添加了定时器初始化函数；
 2. 编写了`ds_timer.c`和对应的头文件`ds_timer.h`,在其中定义了一个测试用的新任务，测试了定时器功能和消息队列功能；
+3. 更新了项目主组件中的`CMakeLists`文件。
+
+
+### 2023.5.17
+1. 添加了扁平的文件系统`SPIFFS`，添加了`ds_spiffs.c`及其头文件`ds_spiffs.h`；
+2. 添加了分区表`partitions_example.csv`；
 3. 更新了项目主组件中的`CMakeLists`文件。

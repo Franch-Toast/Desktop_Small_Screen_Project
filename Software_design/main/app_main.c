@@ -13,6 +13,8 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 
+#include "ds_timer.h"  //加入timer功能的头文件
+#include "ds_spiffs.h" //加入spiffs功能的头文件
 
 #include "esp_log.h" //加入comonents中的关于日志的头文件
 
@@ -49,7 +51,11 @@ void app_main(void)
 
     printf("Minimum free heap size: %d bytes\n", esp_get_minimum_free_heap_size());
 
-    ds_timer_init();//添加了在ds_timer.c中自定义的定时器初始化函数
+    ds_timer_init(); // 添加了在ds_timer.c中自定义的定时器初始化函数
+
+    ds_spiffs_init();   // 文件系统初始化
+    ds_spiffs_test();   // 文件系统功能测试
+    ds_spiffs_deinit(); // 文件系统的注销
 
     xTaskCreate(task1, "task1", 2048, NULL, 10, NULL);
     // 调用创建任务函数，赋予2048字节的堆栈，无参数，优先级为10，创建的函数句柄为NULL
