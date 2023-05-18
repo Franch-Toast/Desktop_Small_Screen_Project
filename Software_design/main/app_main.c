@@ -15,6 +15,8 @@
 
 #include "ds_timer.h"  //加入timer功能的头文件
 #include "ds_spiffs.h" //加入spiffs功能的头文件
+#include "ds_nvs.h" //加入NVS功能的头文件
+#include "ds_system_data.h"
 
 #include "esp_log.h" //加入comonents中的关于日志的头文件
 
@@ -56,6 +58,13 @@ void app_main(void)
     ds_spiffs_init();   // 文件系统初始化
     ds_spiffs_test();   // 文件系统功能测试
     ds_spiffs_deinit(); // 文件系统的注销
+
+    char *ssid = "leo";
+    char *psw = "123456789";
+    set_system_data_wifi_info(ssid, strlen(ssid), psw, strlen(psw));
+    ds_nvs_init();
+    ds_nvs_save_wifi_info();
+    ds_nvs_read_wifi_info();
 
     xTaskCreate(task1, "task1", 2048, NULL, 10, NULL);
     // 调用创建任务函数，赋予2048字节的堆栈，无参数，优先级为10，创建的函数句柄为NULL

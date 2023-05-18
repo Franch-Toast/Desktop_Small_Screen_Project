@@ -91,6 +91,14 @@
 该分支实现的功能：为原始分区表添加了`storage`分区，将 SPIFFS 注册并挂载到 VFS，调用`esp_err_t ds_spiffs_init(void);`进行相应的初始化，随后调用`void ds_spiffs_test(void);`测试使用C标准库的文件操作函数进行相应的一系列操作，最后调用`void ds_spiffs_deinit(void);`函数注销。
 
 
+### NVS分支
+
+根据[Storage--NVS](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/storage/nvs_flash.html#id10)来编写`ds_nvs.c`文件，在文件中实现初始化、写入、读取、提交等功能。
+
+另外编写有`ds_system_data.c`文件，实现将通过API得到的信息赋值于全局结构体变量，用于后续的操作，该函数在`ds_nvs.c`中调用。
+
+这里使用了`ESP_ERROR_CHECK`宏，功能和`assert`类似，不同之处在于：这个宏会检查 `esp_err_t` 的值，而非判断 bool 条件。如果传给 `ESP_ERROR_CHECK()` 的参数不等于 `ESP_OK` ，则会在控制台上打印错误消息，然后调用 `abort()` 函数。详情可参考[错误处理文档](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-guides/error-handling.html?highlight=esp_error_check)。
+
 
 ## 更新日志
 
@@ -130,3 +138,9 @@
 1. 添加了扁平的文件系统`SPIFFS`，添加了`ds_spiffs.c`及其头文件`ds_spiffs.h`；
 2. 添加了分区表`partitions_example.csv`；
 3. 更新了项目主组件中的`CMakeLists`文件。
+
+
+### 2023.5.18
+
+1. 用非易失性存储 (NVS) 库在 flash 中存储键值格式的数据，也即为WIFI的信息。添加了`ds_system_data.c`、`ds_nvs.c`及其对应的头文件，实现了存储及读取WIFI账号密码的功能。
+2. 更新了项目主组件中的`CMakeLists`文件。
