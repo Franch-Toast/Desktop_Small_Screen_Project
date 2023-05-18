@@ -10,9 +10,13 @@
 
 ### 外设选型
 
-电池管理：[单节锂离子电池恒流/恒压线性充电器TP4056](https://item.szlcsc.com/772193.html)、[三端输出低压差线性稳压器AMS1117](https://item.szlcsc.com/323882.html)
+电池管理：[单节锂离子电池恒流/恒压线性充电器TP4056](https://item.szlcsc.com/772193.html)、[三端输出低压差线性稳压器BL9110-330BPFB](https://item.szlcsc.com/180631.html)
 
+主控：ESP32-S
 
+屏幕：GDEW0154T8D
+
+USB转串口：CH340N
 
 
 
@@ -100,6 +104,15 @@
 这里使用了`ESP_ERROR_CHECK`宏，功能和`assert`类似，不同之处在于：这个宏会检查 `esp_err_t` 的值，而非判断 bool 条件。如果传给 `ESP_ERROR_CHECK()` 的参数不等于 `ESP_OK` ，则会在控制台上打印错误消息，然后调用 `abort()` 函数。详情可参考[错误处理文档](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-guides/error-handling.html?highlight=esp_error_check)。
 
 
+### GPIO分支
+
+根据[Peripherals--GPIO](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/peripherals/gpio.html)来编写`ds_gpio.c`文件，在文件中实现对GPIO的配置初始化，对单一引脚的ISR函数编写，并创建消息队列在任务中处理中断的操作。
+
+最后对屏幕以及触控屏的几个IO置位操作函数进行了API的调用。值得注意的是，在任务中没有调用GPIO的初始化，所以实际上该工程跑起来应该是不会引起中断的，如果要实现应该在`app_main.c`函数中调用`void ds_gpio_init(void);`函数。
+
+
+
+
 ## 更新日志
 
 ### 2023.5.9
@@ -142,5 +155,6 @@
 
 ### 2023.5.18
 
-1. 用非易失性存储 (NVS) 库在 flash 中存储键值格式的数据，也即为WIFI的信息。添加了`ds_system_data.c`、`ds_nvs.c`及其对应的头文件，实现了存储及读取WIFI账号密码的功能。
-2. 更新了项目主组件中的`CMakeLists`文件。
+1. 在`NVS`分支中用非易失性存储 (NVS) 库在 flash 中存储键值格式的数据，也即为WIFI的信息。添加了`ds_system_data.c`、`ds_nvs.c`及其对应的头文件，实现了存储及读取WIFI账号密码的功能；
+2. 更新了项目主组件中的`CMakeLists`文件；
+3. 在`GPIO`分支中测试了GPIO功能，添加了`ds_gpio.c`及其头文件，并编写了对屏幕以及触控屏连接主控IO的基本操作，并在任务中实现打印中断触发的情况。
