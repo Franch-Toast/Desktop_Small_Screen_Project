@@ -4,8 +4,11 @@ idf_component_register(SRCS
                             "src/fs/ds_spiffs.c"
                             "src/hal/ds_nvs.c"
                             "src/ds_system_data.c"
+                            "src/driver/ds_ft6336.c"
+                            "src/hal/ds_i2c.c"
                     INCLUDE_DIRS 
                         "."
                         "./include/hal"
                         "./include/fs"
-                        "./include")
+                        "./include"
+                        "./include/driver")

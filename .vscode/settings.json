@@ -6,6 +6,7 @@
         "queue.h": "c",
         "freertos.h": "c",
         "timer_types.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "ratio": "c"
     }
 }

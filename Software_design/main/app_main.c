@@ -17,6 +17,8 @@
 #include "ds_spiffs.h" //加入spiffs功能的头文件
 #include "ds_nvs.h" //加入NVS功能的头文件
 #include "ds_system_data.h"
+#include "ds_i2c.h"
+#include "ds_ft6336.h"
 
 #include "esp_log.h" //加入comonents中的关于日志的头文件
 
@@ -69,16 +71,15 @@ void app_main(void)
     xTaskCreate(task1, "task1", 2048, NULL, 10, NULL);
     // 调用创建任务函数，赋予2048字节的堆栈，无参数，优先级为10，创建的函数句柄为NULL
 
-    for (int i = 10; i >= 0; i--)
+    TP_POSITION_T position;
+
+    init_ft6336();
+
+    while (1)
     {
-        printf("Restarting in %d seconds...\n", i);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        // printf("system run ...\n");
+        get_ft6336_touch_sta(&position);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
         // 延迟 1000/1000=1 us，这里在task.h中实际应该有一个宏定义#define portTICK_PERIOD_MS 1000，但是本项目中没有
     }
-
-    ESP_LOGI(TAG, "system init V1.1"); // 写入输出日志信息
-
-    printf("Restarting now.\n");
-    fflush(stdout);
-    esp_restart();
 }

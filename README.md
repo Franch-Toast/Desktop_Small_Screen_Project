@@ -18,12 +18,20 @@
 
 USB转串口：CH340N
 
-
+TP(touch panel controller):FocalTech FT6336
 
 
 
 ### 原理图设计
 
+
+#### IO口设计
+
+TP接口（I2C）：
+        IO32：SCL
+        IO33：SDA
+        IO5：RST
+        IO4：INT
 
 
 
@@ -111,6 +119,13 @@ USB转串口：CH340N
 最后对屏幕以及触控屏的几个IO置位操作函数进行了API的调用。值得注意的是，在任务中没有调用GPIO的初始化，所以实际上该工程跑起来应该是不会引起中断的，如果要实现应该在`app_main.c`函数中调用`void ds_gpio_init(void);`函数。
 
 
+### I2C分支
+
+根据[Peripherals--I2C](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/peripherals/i2c.html#)编写`ds_i2c.c`文件，文件中实现了主机配置、主机读取、发送数据的函数。
+
+更重要的是通过这种通讯方法根据FT6336的数据手册来驱动，在`ds_ft6336.c`中实现扫描屏幕触点函数以及将触点转换为坐标的函数，这个函数写的有点问题，后续会进行更改。
+
+
 
 
 ## 更新日志
@@ -158,3 +173,9 @@ USB转串口：CH340N
 1. 在`NVS`分支中用非易失性存储 (NVS) 库在 flash 中存储键值格式的数据，也即为WIFI的信息。添加了`ds_system_data.c`、`ds_nvs.c`及其对应的头文件，实现了存储及读取WIFI账号密码的功能；
 2. 更新了项目主组件中的`CMakeLists`文件；
 3. 在`GPIO`分支中测试了GPIO功能，添加了`ds_gpio.c`及其头文件，并编写了对屏幕以及触控屏连接主控IO的基本操作，并在任务中实现打印中断触发的情况。
+
+
+### 2023.5.22
+
+1. 在`I2C`分支中添加了使用I2C主机读写通讯的功能`ds_i2c.c`，并编写了触摸屏TP的驱动程序`ds_ft6336.c`，实现了主控使用I2C驱动FT6336获取触摸坐标的功能；
+2. 更新了项目主组件中的`CMakeLists`文件；

@@ -16,9 +16,9 @@
  * GPIO34:  input, pulled up, interrupt from rising edge 输入、上升、上升沿中断
  */
 
-#define GPIO_OUTPUT_IO_0 5
+#define GPIO_OUTPUT_IO_0 5 // TP复位引脚
 #define GPIO_OUTPUT_PIN_SEL ((1ULL << GPIO_OUTPUT_IO_0))
-#define GPIO_INPUT_IO_0 34
+#define GPIO_INPUT_IO_0 4 // TP中断引脚
 #define GPIO_INPUT_PIN_SEL ((1ULL << GPIO_INPUT_IO_0))
 #define ESP_INTR_FLAG_DEFAULT 0
 
@@ -122,7 +122,7 @@ void ds_screen_gpio_init() // 显示屏GPIO初始化
     // configure GPIO with the given settings
     gpio_config(&io_conf);
 
-    io_conf.intr_type = GPIO_INTR_NEGEDGE;//下降沿触发
+    io_conf.intr_type = GPIO_INTR_NEGEDGE; // 下降沿触发
     // bit mask of the pins, use GPIO4/5 here
     io_conf.pin_bit_mask = SCREEN_GPIO_INTPUT_BUSY_SEL;
     // set as input mode
