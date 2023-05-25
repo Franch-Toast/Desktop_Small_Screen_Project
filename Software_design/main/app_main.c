@@ -15,10 +15,11 @@
 
 #include "ds_timer.h"  //加入timer功能的头文件
 #include "ds_spiffs.h" //加入spiffs功能的头文件
-#include "ds_nvs.h" //加入NVS功能的头文件
+#include "ds_nvs.h"    //加入NVS功能的头文件
 #include "ds_system_data.h"
 #include "ds_i2c.h"
-#include "ds_ft6336.h"
+#include "ds_ft6336.h" //TP驱动程序头文件
+#include "ds_screen.h" //墨水屏幕驱动程序头文件
 
 #include "esp_log.h" //加入comonents中的关于日志的头文件
 
@@ -74,6 +75,8 @@ void app_main(void)
     TP_POSITION_T position;
 
     init_ft6336();
+    init_screen_interface(); // 初始化屏幕界面
+    ds_screen_init();        // 屏幕初始化
 
     while (1)
     {

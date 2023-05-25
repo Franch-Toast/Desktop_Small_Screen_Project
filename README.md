@@ -33,6 +33,14 @@ TP接口（I2C）：
         IO5：RST
         IO4：INT
 
+屏幕接口（SPI）：
+        SCLK：IO25 SPI 串口通信时钟信号线。
+        SDI：IO26 SPI 串口通信数据信号线。 
+        CS：IO27 片选，低电平有效。
+        D/C：IO14 数据/命令 读写选择，高电平为数据，低电平为命令。
+        RES：IO12 电子纸复位信号，低电平有效。
+        BUSY：IO13 电子纸刷新时，BUSY 引脚发出忙信号给主 MCU，此时 MCU 无法对电子纸驱动 IC 进行读写操作；电子纸刷新完成后，BUSY 引脚发出闲置状态信号，此时 MCU 可以对 电子纸驱动 IC 进行读写操作。GDEW 系列电子纸 BUSY 引脚忙状态为高电平（GDEH 系列为低电平），BUSY 引脚空闲状态反之。
+
 
 
 
@@ -126,6 +134,13 @@ TP接口（I2C）：
 更重要的是通过这种通讯方法根据FT6336的数据手册来驱动，在`ds_ft6336.c`中实现扫描屏幕触点函数以及将触点转换为坐标的函数，这个函数写的有点问题，后续会进行更改。
 
 
+### SPI分支
+
+根据[Peripherals--SPI](https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.4/esp32/api-reference/peripherals/spi_master.html)编写`ds_spi.c`文件，文件中实现了主机SPI的配置、主机发送数据、指令的函数。
+
+另外根据[GD墨水瓶的官方技术文档](https://www.good-display.cn/product/205.html)来编写其驱动程序，这里没有具体的研究直接用了给出的代码，后续会返回来研究。
+
+
 
 
 ## 更新日志
@@ -179,3 +194,10 @@ TP接口（I2C）：
 
 1. 在`I2C`分支中添加了使用I2C主机读写通讯的功能`ds_i2c.c`，并编写了触摸屏TP的驱动程序`ds_ft6336.c`，实现了主控使用I2C驱动FT6336获取触摸坐标的功能；
 2. 更新了项目主组件中的`CMakeLists`文件；
+
+
+### 2023.5.25
+
+1. 更新了屏幕与主控的IO接口；
+2. 在`SPI`分支中添加了主控通过使用SPI向屏幕写指令、数据的功能`ds_spi.c`，并编写了屏幕的显示功能`ds_screen.c`；
+3. 更新了项目主组件中的`CMakeLists`文件；
